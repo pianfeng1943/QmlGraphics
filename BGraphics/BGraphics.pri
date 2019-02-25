@@ -8,7 +8,8 @@ HEADERS += \
     $$PWD/BGraphicsPathItem.h \
     $$PWD/BGraphicsRectItem.h \
     $$PWD/BGraphicsScene.h \
-    $$PWD/BGraphicsShapeItem.h
+    $$PWD/BGraphicsShapeItem.h \
+    $$PWD/BGraphicsPixmapItem.h
 
 SOURCES += \
     $$PWD/BGraphicsAbstractItem.cpp \
@@ -18,4 +19,5 @@ SOURCES += \
     $$PWD/BGraphicsPathItem.cpp \
     $$PWD/BGraphicsRectItem.cpp \
     $$PWD/BGraphicsScene.cpp \
-    $$PWD/BGraphicsShapeItem.cpp
+    $$PWD/BGraphicsShapeItem.cpp \
+    $$PWD/BGraphicsPixmapItem.cpp

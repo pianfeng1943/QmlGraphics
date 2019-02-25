@@ -13,10 +13,6 @@ public:
 public:
     void setGeometry(const QPointF &begin, const QPointF &end, int translate = 0);
 
-protected:
-    friend class BGraphicsShapePainter;
-    QPointF m_beginPos;
-    QPointF m_endPos;
 };
 
 
@@ -27,12 +23,7 @@ class BGraphicsShapePainter : public BGraphicsAbstractPainter
 public:
     BGraphicsShapePainter();
     virtual ~BGraphicsShapePainter() = 0;
-    virtual void synchronize(QNanoQuickItem *item);
     virtual void paint(QNanoPainter *painter);
-
-protected:
-    QPointF m_beginPos;
-    QPointF m_endPos;
 };
 
 

@@ -21,7 +21,8 @@ protected:
     bool    m_isSelected;
     QPen    m_pen;
     QFont   m_font;
-
+    QPointF m_beginPos;
+    QPointF m_endPos;
 };
 
 #endif // BGRAPHICSABSTRACTPAINTER_H

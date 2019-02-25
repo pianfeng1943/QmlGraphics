@@ -1,5 +1,5 @@
 #include "BGraphicsAbstractPainter.h"
-#include "BGraphicsAbstractItem.h".h"
+#include "BGraphicsAbstractItem.h"
 
 
 
@@ -21,5 +21,7 @@ void BGraphicsAbstractPainter::synchronize(QNanoQuickItem *item)
         m_isSelected = pItem->isSelected();
         m_pen = pItem->pen();
         m_font = pItem->font();
+        m_beginPos = pItem->m_beginPos;
+        m_endPos = pItem->m_endPos;
     }
 }

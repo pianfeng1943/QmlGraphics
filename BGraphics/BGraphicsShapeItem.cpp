@@ -42,17 +42,6 @@ BGraphicsShapePainter::~BGraphicsShapePainter()
 
 }
 
-void BGraphicsShapePainter::synchronize(QNanoQuickItem *item)
-{
-    BGraphicsShapeItem *realItem = static_cast<BGraphicsShapeItem*>(item);
-    if (realItem)
-    {
-        m_beginPos = realItem->m_beginPos;
-        m_endPos = realItem->m_endPos;
-    }
-    return BGraphicsAbstractPainter::synchronize(item);
-}
-
 void BGraphicsShapePainter::paint(QNanoPainter *painter)
 {
     painter->setLineCap(QNanoPainter::CAP_ROUND);
