@@ -76,11 +76,11 @@ void BGraphicsScene::setSceneScale(qreal scale, qreal x, qreal y)
     QList<QQuickItem*> list = childItems();
     foreach (QQuickItem* item, list)
     {
+        item->setX(item->x() * x);
+        item->setY(item->y() * y);
         BGraphicsAbstractItem *pItem = dynamic_cast<BGraphicsAbstractItem*>(item);
         if (pItem)
         {
-            pItem->setX(pItem->x() * x);
-            pItem->setY(pItem->y() * y);
             pItem->scaled();
             pItem->update();
         }
@@ -177,6 +177,8 @@ void BGraphicsScene::mouseReleaseEvent(QMouseEvent *event)
 
 void BGraphicsScene::mouseMoveEvent(QMouseEvent *event)
 {
+    /*if (!contains(event->pos()))
+        return;*/
     switch (m_mode)
     {
     case Pen:

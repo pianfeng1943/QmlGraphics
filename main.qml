@@ -63,7 +63,11 @@ Window {
 
     BGraphicsScene {
         id: graphicsScene
-        anchors.fill: bg
+        x: bg.x
+        y: bg.y
+        width: bg.width
+        height: bg.height * 20
+        clip: true
         property int sceneMode: 0
         Component {
             id: comC
@@ -72,19 +76,22 @@ Window {
                 width: text.length > 0 ? contentWidth+10 : 20
                 height: 40
                 padding: 1
+                scale: 1.0
                 background: Rectangle {
+                    id: textBg
                     implicitWidth: text.width
                     implicitHeight: text.height
                     border.color: "white"
                     border.width: text.focus ? 1 : 0
-
+                    anchors.fill: parent
                     color: "#00000000"
-                    //opacity: 0
                 }
                 font.pointSize: 20
                 color: "red"
                 selectByMouse: true
                 readOnly: graphicsScene.sceneMode == 1
+                property int sceneWidth: 0
+                property int sceneHeight: 0
 
                 onFocusChanged: {
                     if (focus === true)
@@ -93,16 +100,27 @@ Window {
                         destroy()
                 }
 
-                MouseArea
-                {
+                Connections {
+                    target: graphicsScene
+                    onWidthChanged: {
+                        if (text.width === 1280)
+                            text.scale = 1
+                        else
+                            text.scale = graphicsScene.width / 1280
+
+                        console.log("ddddddddddd", bg.x, bg.y)
+                    }
+                }
+
+                MouseArea {
                     enabled: graphicsScene.sceneMode === 1
                     anchors.fill: parent
                     drag.target: text
-                    drag.axis: Drag.XAndYAxis
+                    /*drag.axis: Drag.XAndYAxis
                     drag.minimumX: 0
                     drag.minimumY: 0
-                    drag.maximumX: mainView.width - width
-                    drag.maximumY: mainView.height - height
+                    drag.maximumX: graphicsScene.width - text.width*text.scale
+                    drag.maximumY: graphicsScene.height - text.height*text.scale*/
 
                     onPressed: {
                         if (mouse.button === Qt.LeftButton) {
@@ -117,6 +135,8 @@ Window {
         function addText(x, y, scale)
         {
             var obj = comC.createObject(graphicsScene, {"x": x, "y": y, "scale": scale});
+            obj.sceneWidth = parent.width
+            obj.sceneHeight = parent.height
             obj.focus = true
             return obj;
         }
