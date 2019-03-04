@@ -107,8 +107,6 @@ Window {
                             text.scale = 1
                         else
                             text.scale = graphicsScene.width / 1280
-
-                        console.log("ddddddddddd", bg.x, bg.y)
                     }
                 }
 

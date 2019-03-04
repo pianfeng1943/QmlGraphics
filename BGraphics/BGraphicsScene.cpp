@@ -161,7 +161,6 @@ void BGraphicsScene::mousePressEvent(QMouseEvent *event)
                       Q_ARG(QVariant, event->pos().x()),
                       Q_ARG(QVariant, event->pos().y()),
                       Q_ARG(QVariant, m_sceneScale));
-            //qDebug()<< childItems().count();
             break;
         }
         default:
@@ -261,7 +260,6 @@ void BGraphicsScene::wheelEvent(QWheelEvent *event)
         if (numSteps.y() > 0)
             numSteps.setY(0);
         setPosition(numSteps);
-        qDebug()<< numSteps;
     }
 }
 
