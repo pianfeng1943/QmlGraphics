@@ -23,6 +23,9 @@ protected:
     QFont   m_font;
     QPointF m_beginPos;
     QPointF m_endPos;
+    qreal   m_penScale;
+    qreal   m_scale;
+
 };
 
 #endif // BGRAPHICSABSTRACTPAINTER_H

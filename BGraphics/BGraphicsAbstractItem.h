@@ -23,9 +23,12 @@ public:
     bool isSelected() const {return m_isSelected;}
     void setPen(const QPen &pen) {m_pen = pen;}
     QPen pen() const {return m_pen;}
+    void setPenScale(qreal scale) {m_penScale = scale;}
+    qreal penScale() const {return m_penScale;}
     void setFont(const QFont &font) {m_font = font;}
     QFont font() const {return m_font;}
-    void scaled();
+    void setScaled();
+    qreal scaled() const {return m_scale;}
     bool isResizing() const {return m_resizing;}
     void setCornerResizeSize(int size) {m_circleSize = size;}
     int cornerResizeSize() const {return m_circleSize;}
@@ -60,6 +63,8 @@ private:
     // scale
     qreal   m_parentOldWidth = 0.0;
     qreal   m_parentOldHeight = 0.0;
+    qreal   m_penScale = 1.0;
+    qreal   m_scale = 1.0;
 
 protected:
     friend class BGraphicsAbstractPainter;

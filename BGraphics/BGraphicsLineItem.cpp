@@ -45,8 +45,8 @@ void BGraphicsLinePainter::paint(QNanoPainter *painter)
     BGraphicsShapePainter::paint(painter);
 
     painter->beginPath();
-    painter->moveTo(m_beginPos - m_originPos);
-    painter->lineTo(m_beginPos - m_originPos);
-    painter->lineTo(m_endPos - m_originPos);
+    painter->moveTo((m_beginPos - m_originPos)*m_scale);
+    painter->lineTo((m_beginPos - m_originPos)*m_scale);
+    painter->lineTo((m_endPos - m_originPos)*m_scale);
     painter->stroke();
 }

@@ -15,6 +15,7 @@ Window {
 
     property double oldWidth: 0.0
     property double oldHeight: 0.0
+    property double scaled: 1.0
 
     Rectangle {
         id: bg
@@ -27,6 +28,7 @@ Window {
         var oWidth = mainView.width;
         if (mainView.width === 1280)
         {
+            scaled = 1.0
             bg.width = 1280
             bg.height = 720
             if (oldWidth === 0.0 || oldHeight === 0.0)
@@ -49,6 +51,7 @@ Window {
             }
             bg.width = oldWidth = re_width
             bg.height = oldHeight = re_height
+            scaled = re_width/1280
             graphicsScene.setSceneScale(re_width/1280, re_width/1280, re_height/720)
         }
     }
@@ -76,7 +79,6 @@ Window {
                 width: text.length > 0 ? contentWidth+10 : 20
                 height: 40
                 padding: 1
-                scale: 1.0
                 background: Rectangle {
                     id: textBg
                     implicitWidth: text.width
@@ -86,12 +88,15 @@ Window {
                     anchors.fill: parent
                     color: "#00000000"
                 }
-                font.pointSize: 20
+                font.pointSize: penWidthS
                 color: "red"
                 selectByMouse: true
                 readOnly: graphicsScene.sceneMode == 1
                 property int sceneWidth: 0
                 property int sceneHeight: 0
+                property double penWidth: 20
+                property double penWidthS: 20
+                property double penScale: 1.0
 
                 onFocusChanged: {
                     if (focus === true)
@@ -103,10 +108,20 @@ Window {
                 Connections {
                     target: graphicsScene
                     onWidthChanged: {
-                        if (text.width === 1280)
-                            text.scale = 1
+                        if (text.penScale === 1.0)
+                        {
+                            if (graphicsScene.width === text.sceneWidth)
+                                penWidthS = penWidth;
+                            else
+                                penWidthS = penWidth * graphicsScene.width/text.sceneWidth
+                        }
                         else
-                            text.scale = graphicsScene.width / 1280
+                        {
+                            if (graphicsScene.width === text.sceneWidth)
+                                penWidthS = penWidth * penScale
+                            else
+                                penWidthS = penWidth * graphicsScene.width/text.sceneWidth * penScale
+                        }
                     }
                 }
 
@@ -114,11 +129,11 @@ Window {
                     enabled: graphicsScene.sceneMode === 1
                     anchors.fill: parent
                     drag.target: text
-                    /*drag.axis: Drag.XAndYAxis
+                    drag.axis: Drag.XAndYAxis
                     drag.minimumX: 0
                     drag.minimumY: 0
-                    drag.maximumX: graphicsScene.width - text.width*text.scale
-                    drag.maximumY: graphicsScene.height - text.height*text.scale*/
+                    drag.maximumX: graphicsScene.width - text.width
+                    drag.maximumY: graphicsScene.height - text.height
 
                     onPressed: {
                         if (mouse.button === Qt.LeftButton) {
@@ -132,7 +147,8 @@ Window {
 
         function addText(x, y, scale)
         {
-            var obj = comC.createObject(graphicsScene, {"x": x, "y": y, "scale": scale});
+            var obj = comC.createObject(graphicsScene, {"x": x, "y": y, "penScale": scale});
+            obj.penWidthS = obj.penWidth * scale
             obj.sceneWidth = parent.width
             obj.sceneHeight = parent.height
             obj.focus = true

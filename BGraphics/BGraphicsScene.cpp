@@ -81,8 +81,9 @@ void BGraphicsScene::setSceneScale(qreal scale, qreal x, qreal y)
         BGraphicsAbstractItem *pItem = dynamic_cast<BGraphicsAbstractItem*>(item);
         if (pItem)
         {
-            pItem->scaled();
-            pItem->update();
+            pItem->setWidth(pItem->width()*x);
+            pItem->setHeight(pItem->height()*y);
+            pItem->setScaled();
         }
     }
 }
@@ -125,7 +126,8 @@ void BGraphicsScene::mousePressEvent(QMouseEvent *event)
         {
             BGraphicsPathItem *item = new BGraphicsPathItem(this);
             m_pItem = item;
-            item->setPen(QPen(m_penColor, m_penWidth * m_sceneScale));
+            item->setPen(QPen(m_penColor, m_penWidth));
+            item->setPenScale(m_sceneScale);
             item->drawPath(event->pos());
             break;
         }
@@ -133,14 +135,16 @@ void BGraphicsScene::mousePressEvent(QMouseEvent *event)
         {
             BGraphicsLineItem *item = new BGraphicsLineItem(this);
             m_pItem = item;
-            item->setPen(QPen(m_shapeColor, m_shapeWidth * m_sceneScale));
+            item->setPen(QPen(m_shapeColor, m_shapeWidth));
+            item->setPenScale(m_sceneScale);
             item->drawLine(event->pos(), event->pos());
             break;
         }
         case Rect:
         {
             BGraphicsRectItem *item = new BGraphicsRectItem(this);
-            item->setPen(QPen(m_shapeColor, m_shapeWidth * m_sceneScale));
+            item->setPen(QPen(m_shapeColor, m_shapeWidth));
+            item->setPenScale(m_sceneScale);
             m_pItem = item;
             item->drawRect(event->pos(), event->pos());
             break;
@@ -148,7 +152,8 @@ void BGraphicsScene::mousePressEvent(QMouseEvent *event)
         case Ellipse:
         {
             BGraphicsEllipseItem *item = new BGraphicsEllipseItem(this);
-            item->setPen(QPen(m_shapeColor, m_shapeWidth * m_sceneScale));
+            item->setPen(QPen(m_shapeColor, m_shapeWidth));
+            item->setPenScale(m_sceneScale);
             m_pItem = item;
             item->drawEllipse(event->pos(), event->pos());
             break;

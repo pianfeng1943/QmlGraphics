@@ -70,12 +70,12 @@ void BGraphicsPathPainter::paint(QNanoPainter *painter)
     if (m_points.count() > 0)
     {
         painter->beginPath();
-        QPointF firstPoint = m_points.first() - m_originPos;
+        QPointF firstPoint = (m_points.first() - m_originPos) * m_scale;
         painter->moveTo(firstPoint.x(), firstPoint.y()-1);
         painter->lineTo(firstPoint);
         for (int i=1; i<m_points.size(); ++i)
         {
-            painter->lineTo(m_points.at(i) - m_originPos);
+            painter->lineTo((m_points.at(i) - m_originPos) * m_scale);
         }
         painter->stroke();
     }

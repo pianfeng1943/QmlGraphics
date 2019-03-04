@@ -30,14 +30,15 @@ void BGraphicsAbstractItem::setSelected(bool select)
     update();
 }
 
-void BGraphicsAbstractItem::scaled()
+void BGraphicsAbstractItem::setScaled()
 {
     if (parentItem())
     {
         if (parentItem()->width() == m_parentOldWidth || parentItem()->height() == m_parentOldHeight)
-            setScale(1.0);
+            m_scale = 1.0;
         else
-            setScale(qMin(parentItem()->width()/m_parentOldWidth, parentItem()->height()/m_parentOldHeight));
+            m_scale = qMin(parentItem()->width()/m_parentOldWidth, parentItem()->height()/m_parentOldHeight);
+        update();
     }
 }
 
@@ -48,18 +49,18 @@ void BGraphicsAbstractItem::mousePressEvent(QMouseEvent *event)
         m_resizing = true;
         if (LeftDown == m_resizePos)
         {
-            m_resizeFixPos.setX(position().x() + width()*scale());
+            m_resizeFixPos.setX(position().x() + width());
             m_resizeFixPos.setY(0);
         }
         else if (RightUp == m_resizePos)
         {
             m_resizeFixPos.setX(0);
-            m_resizeFixPos.setY(position().y() + height()*scale());
+            m_resizeFixPos.setY(position().y() + height());
         }
         else if (LeftUp == m_resizePos)
         {
-            m_resizeFixPos.setX(position().x() + width()*scale());
-            m_resizeFixPos.setY(position().y() + height()*scale());
+            m_resizeFixPos.setX(position().x() + width());
+            m_resizeFixPos.setY(position().y() + height());
         }
     }
     else
@@ -102,11 +103,11 @@ void BGraphicsAbstractItem::mouseMoveEvent(QMouseEvent *event)
             if (height() + heightMove > DEF_ITEM_MIN_HEIGHT)
             {
                 setY(position().y() - heightMove);
-                setHeight(height() + heightMove/scale());
+                setHeight(height() + heightMove);
             }
             else
             {
-                setY(m_resizeFixPos.y() - DEF_ITEM_MIN_HEIGHT*scale());
+                setY(m_resizeFixPos.y() - DEF_ITEM_MIN_HEIGHT);
                 setHeight(DEF_ITEM_MIN_HEIGHT);
             }
             setWidth(tWidth);
@@ -116,21 +117,21 @@ void BGraphicsAbstractItem::mouseMoveEvent(QMouseEvent *event)
             if (width() + widthMove > DEF_ITEM_MIN_WIDTH)
             {
                 setX(position().x() - widthMove);
-                setWidth(width() + widthMove/scale());
+                setWidth(width() + widthMove);
             }
             else
             {
-                setX(m_resizeFixPos.x() - DEF_ITEM_MIN_WIDTH*scale());
+                setX(m_resizeFixPos.x() - DEF_ITEM_MIN_WIDTH);
                 setWidth(DEF_ITEM_MIN_WIDTH);
             }
             if (height() + heightMove > DEF_ITEM_MIN_HEIGHT)
             {
                 setY(position().y() - heightMove);
-                setHeight(height() + heightMove/scale());
+                setHeight(height() + heightMove);
             }
             else
             {
-                setY(m_resizeFixPos.y() - DEF_ITEM_MIN_HEIGHT*scale());
+                setY(m_resizeFixPos.y() - DEF_ITEM_MIN_HEIGHT);
                 setHeight(DEF_ITEM_MIN_HEIGHT);
             }
         }
@@ -139,11 +140,11 @@ void BGraphicsAbstractItem::mouseMoveEvent(QMouseEvent *event)
             if (width() + widthMove > DEF_ITEM_MIN_WIDTH)
             {
                 setX(position().x() - widthMove);
-                setWidth(width() + widthMove/scale());
+                setWidth(width() + widthMove);
             }
             else
             {
-                setX(m_resizeFixPos.x() - DEF_ITEM_MIN_WIDTH*scale());
+                setX(m_resizeFixPos.x() - DEF_ITEM_MIN_WIDTH);
                 setWidth(DEF_ITEM_MIN_WIDTH);
             }
             setHeight(tHeight);
@@ -166,10 +167,10 @@ void BGraphicsAbstractItem::mouseMoveEvent(QMouseEvent *event)
                 newPos.setX(0);
             if (newPos.y() < 0)
                 newPos.setY(0);
-            if (newPos.x() > parentItem()->width() - width()*scale())
-                newPos.setX(parentItem()->width() - width()*scale());
-            if (newPos.y() > parentItem()->height() - height()*scale())
-                newPos.setY(parentItem()->height() - height()*scale());
+            if (newPos.x() > parentItem()->width() - width())
+                newPos.setX(parentItem()->width() - width());
+            if (newPos.y() > parentItem()->height() - height())
+                newPos.setY(parentItem()->height() - height());
             setPosition(newPos);
         }
     }

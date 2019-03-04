@@ -58,7 +58,22 @@ void BGraphicsShapePainter::paint(QNanoPainter *painter)
         painter->stroke();
     }
     // item
-    painter->setLineWidth(m_pen.width());
+    qreal penWidth;
+    if (m_penScale == 1.0)
+    {
+        if (m_scale == 1.0)
+            penWidth = m_pen.width();
+        else
+            penWidth = m_pen.width() * m_scale;
+    }
+    else
+    {
+        if (m_scale == 1.0)
+            penWidth = m_pen.width() * m_penScale;
+        else
+            penWidth = m_pen.width() * m_penScale * m_scale;
+    }
+    painter->setLineWidth(penWidth);
     QNanoColor lineColor(QNanoColor::fromQColor(m_pen.color()));
     painter->setStrokeStyle(lineColor);
 }
