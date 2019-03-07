@@ -203,7 +203,7 @@ Window {
                    anchors.fill: parent
 
                    onClicked: {
-                       graphicsScene.setPenMode(4, "#ff0000")
+                       graphicsScene.setPenMode(6, "#ff0000")
                        graphicsScene.sceneMode = 0
                    }
                }

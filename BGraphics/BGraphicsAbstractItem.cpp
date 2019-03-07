@@ -38,6 +38,7 @@ void BGraphicsAbstractItem::setScaled()
             m_scale = 1.0;
         else
             m_scale = qMin(parentItem()->width()/m_parentOldWidth, parentItem()->height()/m_parentOldHeight);
+        calculateOffset();
         update();
     }
 }
@@ -248,6 +249,24 @@ bool BGraphicsAbstractItem::resizeItemAt(const QPointF &pos)
     }
 
     return false;
+}
+
+void BGraphicsAbstractItem::calculateOffset()
+{
+    if (m_penScale == 1.0)
+    {
+        if (m_scale == 1.0)
+            m_penWidth = m_pen.width();
+        else
+            m_penWidth = m_pen.width() * m_scale;
+    }
+    else
+    {
+        if (m_scale == 1.0)
+            m_penWidth = m_pen.width() * m_penScale;
+        else
+            m_penWidth = m_pen.width() * m_penScale * m_scale;
+    }
 }
 
 

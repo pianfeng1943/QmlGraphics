@@ -25,7 +25,7 @@ protected:
     QPointF m_endPos;
     qreal   m_penScale;
     qreal   m_scale;
-
+    qreal   m_penWidth;
 };
 
 #endif // BGRAPHICSABSTRACTPAINTER_H

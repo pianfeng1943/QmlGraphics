@@ -23,6 +23,7 @@ void BGraphicsAbstractPainter::synchronize(QNanoQuickItem *item)
         m_font = pItem->font();
         m_beginPos = pItem->m_beginPos;
         m_endPos = pItem->m_endPos;
+        m_penWidth = pItem->m_penWidth;
         m_penScale = pItem->penScale();
         m_scale = pItem->scaled();
     }

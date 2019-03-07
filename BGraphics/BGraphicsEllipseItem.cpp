@@ -12,7 +12,7 @@ QNanoQuickItemPainter *BGraphicsEllipseItem::createItemPainter() const
 
 void BGraphicsEllipseItem::drawEllipse(const QPointF &begin, const QPointF &end)
 {
-    setGeometry(begin, end, pen().width()/2);
+    setGeometry(begin, end, m_penWidth/2);
     update();
 }
 
@@ -34,7 +34,7 @@ void BGraphicsEllipsePainter::paint(QNanoPainter *painter)
     BGraphicsShapePainter::paint(painter);
 
     painter->beginPath();
-    painter->ellipse(QRect(m_pen.width() / 2, m_pen.width() / 2,
-                           width()- m_pen.width(), height() - m_pen.width()));
+    painter->ellipse(QRect(m_penWidth / 2, m_penWidth / 2,
+                           width()- m_penWidth, height() - m_penWidth));
     painter->stroke();
 }

@@ -5,6 +5,7 @@
 #include "BGraphicsEllipseItem.h"
 #include "BGraphicsPixmapItem.h"
 #include <QDebug>
+#include <QDateTime>
 
 
 BGraphicsScene::BGraphicsScene(QQuickItem *parent)
@@ -187,6 +188,10 @@ void BGraphicsScene::mouseMoveEvent(QMouseEvent *event)
     {
     case Pen:
     {
+        /*static qint64 msce = 0;
+        if (QDateTime::currentMSecsSinceEpoch() - msce < 20)
+            return;
+        msce = QDateTime::currentMSecsSinceEpoch();*/
         if (m_pItem.isNull())
             return;
         BGraphicsPathItem *pathItem = dynamic_cast<BGraphicsPathItem*>(m_pItem.data());

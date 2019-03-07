@@ -1,4 +1,8 @@
 #include "BGraphicsPathItem.h"
+#include "bspline.h"
+
+#define USE_BSPLINE
+
 
 BGraphicsPathItem::BGraphicsPathItem(QQuickItem *parent)
     : BGraphicsShapeItem(parent)
@@ -16,33 +20,45 @@ void BGraphicsPathItem::drawPath(const QPointF &pos)
 {
     if (m_bFirst)
     {
-        m_originPos.setX(pos.x() - pen().width()/2);
-        m_originPos.setY(pos.y() - pen().width()/2);
+        m_originPos.setX(pos.x() - m_penWidth/2);
+        m_originPos.setY(pos.y() - m_penWidth/2);
         m_rect.setTopLeft(pos);
         m_bFirst = false;
     }
 
+    m_tPos.push_back(pos);
+
+#ifdef USE_BSPLINE
+    bspline::spline(m_tPos, m_points);
+    for (auto &p : m_points)
+        setItemSize(p);
+#else
+    m_points = m_tPos;
+    setItemSize(pos);
+#endif
+    update();
+}
+
+void BGraphicsPathItem::setItemSize(const QPointF &pos)
+{
     if (pos.x() < m_rect.left())
     {
         m_rect.setLeft(pos.x());
-        m_originPos.setX(pos.x() - pen().width()/2);
+        m_originPos.setX(pos.x() - m_penWidth/2);
     }
     if (pos.y() < m_rect.top())
     {
         m_rect.setTop(pos.y());
-        m_originPos.setY(pos.y() - pen().width()/2);
+        m_originPos.setY(pos.y() - m_penWidth/2);
     }
     if (pos.x() > m_rect.right())
         m_rect.setRight(pos.x());
     if (pos.y() > m_rect.bottom())
         m_rect.setBottom(pos.y());
-    setX(m_rect.x() - pen().width()/2);
-    setY(m_rect.y() - pen().width()/2);
-    setWidth(m_rect.width() +  pen().width());
-    setHeight(m_rect.height() +  pen().width());
-
-    m_points.push_back(pos);
-    update();
+    setX(m_rect.x() - m_penWidth/2);
+    setY(m_rect.y() - m_penWidth/2);
+    setWidth(m_rect.width() +  m_penWidth);
+    setHeight(m_rect.height() +  m_penWidth);
 }
 
 

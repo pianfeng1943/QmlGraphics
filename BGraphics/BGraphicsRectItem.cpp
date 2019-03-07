@@ -40,10 +40,10 @@ void BRectItemPainter::paint(QNanoPainter *painter)
 
     painter->beginPath();
     if (m_isSelected)
-        painter->rect(m_pen.width() / 2 + 2, m_pen.width() / 2 + 2,
-                      width() - m_pen.width() - 4, height() - m_pen.width() - 4);
+        painter->rect(m_penWidth / 2 + 2, m_penWidth / 2 + 2,
+                      width() - m_penWidth - 4, height() - m_penWidth - 4);
     else
-        painter->rect(m_pen.width() / 2, m_pen.width() / 2,
-                      width() - m_pen.width(), height() - m_pen.width());
+        painter->rect(m_penWidth / 2, m_penWidth / 2,
+                      width() - m_penWidth, height() - m_penWidth);
     painter->stroke();
 }

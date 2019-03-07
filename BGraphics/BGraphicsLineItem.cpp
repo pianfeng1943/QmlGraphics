@@ -12,13 +12,13 @@ QNanoQuickItemPainter *BGraphicsLineItem::createItemPainter() const
 
 void BGraphicsLineItem::drawLine(const QPointF &begin, const QPointF &end)
 {
-    m_originPos.setX(begin.x() - pen().width()/2);
-    m_originPos.setY(begin.y() - pen().width()/2);
+    m_originPos.setX(begin.x() - m_penWidth/2);
+    m_originPos.setY(begin.y() - m_penWidth/2);
     if (end.x() < m_originPos.x())
-        m_originPos.setX(end.x() - pen().width()/2);
+        m_originPos.setX(end.x() - m_penWidth/2);
     if (end.y() < m_originPos.y())
-        m_originPos.setY(end.y() - pen().width()/2);
-    setGeometry(begin, end, pen().width()/2);
+        m_originPos.setY(end.y() - m_penWidth/2);
+    setGeometry(begin, end, m_penWidth/2);
     update();
 }
 

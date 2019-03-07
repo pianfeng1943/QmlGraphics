@@ -17,10 +17,14 @@ public:
 public:
     void drawPath(const QPointF &pos);
 
+private:
+    void setItemSize(const QPointF &pos);
+
 
 private:
     friend class BGraphicsPathPainter;
     QVector<QPointF> m_points;
+    QVector<QPointF> m_tPos;
     QPointF m_originPos;
     QRectF m_rect;
     bool m_bFirst;

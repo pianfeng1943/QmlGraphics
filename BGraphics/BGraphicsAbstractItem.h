@@ -21,9 +21,9 @@ public:
 public:
     void setSelected(bool select);
     bool isSelected() const {return m_isSelected;}
-    void setPen(const QPen &pen) {m_pen = pen;}
+    void setPen(const QPen &pen) {m_pen = pen;calculateOffset();}
     QPen pen() const {return m_pen;}
-    void setPenScale(qreal scale) {m_penScale = scale;}
+    void setPenScale(qreal scale) {m_penScale = scale;calculateOffset();}
     qreal penScale() const {return m_penScale;}
     void setFont(const QFont &font) {m_font = font;}
     QFont font() const {return m_font;}
@@ -39,6 +39,7 @@ protected:
 
 private:
     bool resizeItemAt(const QPointF &pos);
+    void calculateOffset();
 
 protected:
     void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
@@ -70,6 +71,7 @@ protected:
     friend class BGraphicsAbstractPainter;
     QPointF m_beginPos;
     QPointF m_endPos;
+    qreal   m_penWidth;
 };
 
 #endif // BGRAPHICSABSTRACTITEM_H
