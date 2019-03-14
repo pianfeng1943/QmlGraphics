@@ -30,7 +30,7 @@ void BGraphicsPathItem::drawPath(const QPointF &pos)
 
 #ifdef USE_BSPLINE
     bspline::spline(m_tPos, m_points);
-    for (auto &p : m_points)
+    for (const auto &p : m_points)
         setItemSize(p);
 #else
     m_points = m_tPos;
